@@ -77,6 +77,14 @@ bool smart_string_append(SmartString* ss, const char* str)
 
 void smart_string_destroy(SmartString* ss)
 {
+	#ifdef DEBUG
+		printf("debug:%s destroying SmartString instance: \n", __func__);
+		printf("SmartString {\n");
+		printf("\tlength   = %zu\n",  ss->length);
+		printf("\tcapacity = %zu\n",  ss->capacity);
+		printf("\tbuffer   = \"%s\"\n", ss->buffer);
+		printf("}\n");
+	#endif
 	free(ss->buffer);
 	free(ss);
 }
