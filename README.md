@@ -3,30 +3,36 @@ A "smart" string buffer for C. Wny is it smart? It automatically resizes itself 
 
 `SmartString* smart_string_new(void)`
 
-** DESCRIPTION **
+**DESCRIPTION**
+
 Create a new `SmartString` instance
 
 **RETURN VALUE**
-SmartString object, or NULL if allocating it fails.
+
+`SmartString` object, or NULL if allocating it fails.
 
 `bool smart_string_append(SmartString* ss, const char* str)`
 
-** DESCRIPTION **
+**DESCRIPTION**
+
 Appends the value of `str` to the end of the current buffer
 
 **RETURN_VALUE**
+
 true if `str` was able to appended to the current `SmartString` buffer. Otherwise it returns false.
 
 `bool smart_string_starts_with(SmartString* ss, const char* str)`
 
-** DESCRIPTION **
+**DESCRIPTION**
+
 Checks to see if the buffer is equal to `str`
 
 **RETURN VALUE**
-true if the string `str` is equal to the `SmartString` buffer. Otherwise it returns false.
 
+true if the string `str` is equal to the `SmartString` buffer. Otherwise it returns false.
 
 `void smart_string_destroy(SmartString* ss)`
 
-** DESCRIPTION **
+**DESCRIPTION**
+
 Destroys a `SmartString` instance and releases any memory allocated.
