@@ -57,10 +57,12 @@ bool smart_string_append(SmartString* ss, const char* str)
 	current_position = ss->length;
 	
 	if(new_length >= ss->capacity) {
-		ss->capacity *= 2;
-		if((ss->buffer = realloc(ss->buffer, ss->capacity)) == NULL) {
-			return false;
-		} 
+		while(new_length >= ss->capacity) {
+			ss->capacity *= 2;
+			if((ss->buffer = realloc(ss->buffer, ss->capacity)) == NULL) {
+				return false;
+			} 
+		}
 	}
 	
 	for(i = 0; i < part_length; i++) {

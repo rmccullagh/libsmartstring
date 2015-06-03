@@ -24,6 +24,14 @@ int main()
 	
 	printf("%s\n", ss->buffer);
 	smart_string_destroy(ss);
-	
+
+	SmartString* str = smart_string_new();
+    	smart_string_append(str, "a long string with more than 32 characters.");
+	printf("%s\n", str->buffer);
+	smart_string_destroy(str);
+
+	return 0;	
+
+
 	return 0;
 }
