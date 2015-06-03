@@ -30,8 +30,6 @@ int main()
 	printf("%s\n", str->buffer);
 	smart_string_destroy(str);
 
-	return 0;	
-
 
 	return 0;
 }
