@@ -19,15 +19,11 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+#include "smart_string.h"
+
 #define D_SMART_STRING_SIZE 16
 
-typedef struct SmartString {
-	size_t length;
-	size_t capacity;
-	char* buffer;
-} SmartString;
-
-SmartString* smart_string_new()
+SmartString* smart_string_new(void)
 {
 	SmartString* ss;
 	if((ss = malloc(sizeof(SmartString))) == NULL) {
@@ -102,42 +98,3 @@ bool smart_string_starts_with(SmartString* ss, const char* str)
 
 		return true;
 }
-
-int main()
-{
-	SmartString* ss = smart_string_new();
-	if(!ss) {
-		return 1;
-	}
-	
-	smart_string_append(ss, "http://")
-	smart_string_append(ss, "www.google.com");
-	smart_string_append(ss, "?");
-	smart_string_append(ss, "tracking=1");
-	smart_string_append(ss, "&");
-	smart_string_append(ss, "browser=chrome");
-	smart_string_append(ss, "&sk=true");
-	
-	if(!smart_string_starts_with(ss, "http")) {
-		printf("only accepting https\n"); 
-	} else {
-		printf("%s\n", ss->buffer);
-	}
-	
-	smart_string_destroy(ss);
-	
-	return 0;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
