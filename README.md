@@ -1,5 +1,5 @@
 ## SmartString
-A "smart" string buffer for C. Wny is it smart? It automatically resizes itself to fit any size string. It has an easy API for dynamic strings.
+A "smart" string buffer for C. Why is it smart? It automatically resizes itself to fit any size string. It has an easy API for dynamic strings.
 
 `SmartString* smart_string_new(void)`
 
@@ -17,7 +17,7 @@ Create a new `SmartString` instance
 
 Appends the value of `str` to the end of the current buffer
 
-**RETURN_VALUE**
+**RETURN VALUE**
 
 true if `str` was able to appended to the current `SmartString` buffer. Otherwise it returns false.
 
