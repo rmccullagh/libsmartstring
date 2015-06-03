@@ -16,7 +16,7 @@ int main()
 	smart_string_append(ss, "browser=chrome");
 	smart_string_append(ss, "&sk=true");
 	
-	if(!smart_string_starts_with(ss, "http")) {
+	if(!smart_string_starts_with(ss, "https")) {
 		printf("only accepting https\n"); 
 	} else {
 		printf("%s\n", ss->buffer);

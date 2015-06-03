@@ -87,7 +87,7 @@ bool smart_string_starts_with(SmartString* ss, const char* str)
 		if(part_length == 0) {
 			return false;
 		}
-		if(part_length != ss->length) {
+		if(part_length > ss->length) {
 			return false;
 		}
 		for(i = 0; i < part_length; i++) {
