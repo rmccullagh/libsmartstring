@@ -1,9 +1,11 @@
-CFLAGS = -DDEBUG -g -Wall -Wextra
+CFLAGS = -DDEBUG -Wall -Wextra
 
 simple: simple.o smart_string.o
 	cc $(CFLAGS) -o simple simple.o smart_string.o
 test_smart_string_append: test_smart_string_append.o smart_string.o
 	cc $(CFLAGS) -o test_smart_string_append test_smart_string_append.o smart_string.o
+test_smart_string_append_sprintf: test_smart_string_append_sprintf.o smart_string.o
+	cc $(CFLAGS) -o test_smart_string_append_sprintf test_smart_string_append_sprintf.o smart_string.o
 sane: sane.o smart_string.o
 	cc $(CFLAGS) -o sane sane.o smart_string.o
 smart_simple.o: simple.c

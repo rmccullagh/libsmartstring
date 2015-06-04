@@ -18,6 +18,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
+#include <stdarg.h>
 
 #include "smart_string.h"
 
@@ -73,6 +74,46 @@ bool smart_string_append(SmartString* ss, const char* str)
 	ss->buffer[current_position] = '\0';
 	
 	return true;
+}
+
+bool FORMAT_ATTR(2, 3) smart_string_append_sprintf(SmartString* ss, const char* format, ...)
+{
+        va_list args;
+        int buffer_size = D_SMART_STRING_SIZE;
+        char* buffer, *buffer2;
+        int n;
+        if((buffer = malloc(buffer_size)) == NULL) {
+                return false;
+        }
+
+        for(;;) {
+                va_start(args, format);
+                n = vsnprintf(buffer, buffer_size, format, args);
+                va_end(args);
+
+                if(n < 0) {
+                        free(buffer);
+                        return false;
+                }
+
+                if(n < buffer_size) {
+                        smart_string_append(ss, buffer);
+			free(buffer);
+                        return true;
+                }
+
+                buffer_size = buffer_size + 1;
+
+                if((buffer2 = realloc(buffer, buffer_size)) == NULL) {
+                        free(buffer);
+                        return false;
+                } else {
+                        buffer = buffer2;
+                }
+        }
+
+        return false;
+
 }
 
 void smart_string_destroy(SmartString* ss)

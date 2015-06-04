@@ -21,6 +21,18 @@ Appends the value of `str` to the end of the current buffer
 
 true if `str` was able to appended to the current `SmartString` buffer. Otherwise it returns false.
 
+`bool smart_string_append_sprintf(SmartString* ss, const char* format, ...)`
+
+**DESCRIPTION**
+
+Append a formated string to the `SmartString` buffer. Taking a variable argument list, it internally calls vsnprintf with
+a locally allocated buffer. It will continue to resize the locally allocated buffer if `vsnprintf` indicates that the resulting string
+was truncated. The locally allocated buffer is freed before the function returns to the caller.
+
+**RETURN VALUE**
+
+true if the format and arguments were able to appended to the `SmartString` buffer. Otherwise it returns false.
+
 `bool smart_string_starts_with(SmartString* ss, const char* str)`
 
 **DESCRIPTION**

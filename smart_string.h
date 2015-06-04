@@ -17,8 +17,10 @@
  
  #include <stddef.h>
  #include <stdbool.h>
- 
- typedef struct SmartString {
+
+#define FORMAT_ATTR(x, y) __attribute__ ((format (printf, x, y)))
+
+typedef struct SmartString {
 	size_t length;
 	size_t capacity;
 	char* buffer;
@@ -26,5 +28,6 @@
 
 SmartString* smart_string_new(void);
 bool smart_string_append(SmartString* ss, const char* str);
+bool FORMAT_ATTR(2, 3) smart_string_append_sprintf(SmartString* ss, const char* format, ...);
 void smart_string_destroy(SmartString* ss);
 bool smart_string_starts_with(SmartString* ss, const char* str);
