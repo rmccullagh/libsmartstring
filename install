@@ -1,0 +1,36 @@
+#!/bin/bash
+
+CFLAGS="-c -fpic -Wall -Wextra -Werror"
+cc $CFLAGS smart_string.c
+echo "checking for directories..."
+if ! [[ -d "${HOME}/lib" ]] ; then	
+	echo install: ${HOME}/lib does not exist..creating it
+	mkdir ${HOME}/lib > .OUTPUT 2>&1
+	LAST_ERROR=$?
+	if [[ $LAST_ERROR != "0" ]] ; then
+		cat .OUTPUT
+		rm .OUTPUT
+		exit 1
+	fi	
+	rm .OUTPUT
+fi
+
+if ! [[ -d "${HOME}/include" ]] ; then	
+	echo install: ${HOME}/include does not exist..creating it
+	mkdir ${HOME}/include > .OUTPUT 2>&1
+	LAST_ERROR=$?
+	if [[ $LAST_ERROR != "0" ]] ; then
+		cat .OUTPUT
+		rm .OUTPUT
+		exit 1
+	fi	
+	rm .OUTPUT
+fi
+echo "compiling files..."
+cc $CFLAGS smart_string.c
+echo "creating shared library..."
+cc -shared smart_string.o -o ${HOME}/lib/libsmartstring.so 	
+ar rs ${HOME}/lib/libsmartstring.a smart_string.o
+echo "copying header files..."
+cp smart_string.h ${HOME}/include
+echo "done"
