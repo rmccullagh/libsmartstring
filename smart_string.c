@@ -78,7 +78,15 @@ bool smart_string_append(SmartString* ss, const char* str)
 
 bool FORMAT_ATTR(2, 3) smart_string_append_sprintf(SmartString* ss, const char* format, ...)
 {
-        va_list args;
+	if((ss == NULL) || (format == NULL)) {
+		return false;
+	}
+
+	if(strlen(format) == 0) {
+		return true;
+	}
+
+	va_list args;
         int buffer_size = D_SMART_STRING_SIZE;
         char* buffer, *buffer2;
         int n;
