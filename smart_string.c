@@ -126,15 +126,22 @@ bool FORMAT_ATTR(2, 3) smart_string_append_sprintf(SmartString* ss, const char* 
 
 void smart_string_destroy(SmartString* ss)
 {
+	if(ss == NULL) {
+		return;
+	}
 	#ifdef DEBUG
 		printf("debug:%s destroying SmartString instance: \n", __func__);
 		printf("SmartString {\n");
 		printf("\tlength   = %zu\n",  ss->length);
 		printf("\tcapacity = %zu\n",  ss->capacity);
-		printf("\tbuffer   = \"%s\"\n", ss->buffer);
+		if(ss->buffer != NULL) {
+			printf("\tbuffer   = \"%s\"\n", ss->buffer);
+		}
 		printf("}\n");
 	#endif
-	free(ss->buffer);
+	if(ss->buffer != NULL) {
+		free(ss->buffer);
+	}
 	free(ss);
 }
 
