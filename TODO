@@ -1,0 +1,12 @@
+smart_string_find_until - Search a SmartString buffer until a given string has been found
+EXAMPLE:
+	buffer = GET / HTTP/1.1\r\n
+                 Content-Length: 8\r\n
+                 \r\n
+                 post_var=1&http_protocol=1.1&type=POST
+        SmartString* headers = smart_string_find_until(buffer, "\r\n\r\n");
+	
+	The return value for the above function should be:
+		GET / HTTP/1.1\r\nContent-Length: 8\r\n\r\n
+
+smart_string_find_after - get all characters into a new buffer after a string has been recognized
