@@ -31,5 +31,17 @@ int main()
 	smart_string_destroy(str);
 
 
+	SmartString* headers = smart_string_new();
+	if(!headers) return 1;
+
+	smart_string_append(headers, "GET / HTTP/1.1\r\n\r\n");
+
+	if(smart_string_ends_with(headers, "\r\n\r\n")) {
+
+		printf("Found end of headers\n");
+	}
+
+	smart_string_destroy(headers);
+
 	return 0;
 }
