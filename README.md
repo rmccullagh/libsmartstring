@@ -37,11 +37,21 @@ true if the format and arguments were able to appended to the `SmartString` buff
 
 **DESCRIPTION**
 
-Checks to see if the buffer is equal to `str`
+Checks to see if the buffer starts with the characters in `str`
 
 **RETURN VALUE**
 
 true if the string `str` is equal to the `SmartString` buffer. Otherwise it returns false.
+
+`bool smart_string_ends_with(SmartString* ss, const char* str)`
+
+**DESCRIPTION**
+
+Checks to see if the buffer ends with the characters in `str`
+
+**RETURN VALUE**
+
+true if all characters in `str` were found at the end of the `SmartString` buffer. Otherwise it returns false.
 
 `void smart_string_destroy(SmartString* ss)`
 
