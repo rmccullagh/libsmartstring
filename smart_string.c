@@ -78,50 +78,46 @@ bool smart_string_append(SmartString* ss, const char* str)
 
 bool FORMAT_ATTR(2, 3) smart_string_append_sprintf(SmartString* ss, const char* format, ...)
 {
-	if((ss == NULL) || (format == NULL)) {
-		return false;
-	}
-
+	if((ss == NULL) || (format == NULL)) { return false; }
 	if(strlen(format) == 0) {
 		return true;
 	}
 
 	va_list args;
-        int buffer_size = D_SMART_STRING_SIZE;
-        char* buffer, *buffer2;
-        int n;
-        if((buffer = malloc(buffer_size)) == NULL) {
-                return false;
-        }
+	int buffer_size = D_SMART_STRING_SIZE;
+	char* buffer, *buffer2;
+	int n;
+	if((buffer = malloc(buffer_size)) == NULL) {
+		return false;
+	}
 
-        for(;;) {
-                va_start(args, format);
-                n = vsnprintf(buffer, buffer_size, format, args);
-                va_end(args);
+	for(;;) {
+		va_start(args, format);
+		n = vsnprintf(buffer, buffer_size, format, args);
+		va_end(args);
 
-                if(n < 0) {
-                        free(buffer);
-                        return false;
-                }
-
-                if(n < buffer_size) {
-                        smart_string_append(ss, buffer);
+		if(n < 0) {
 			free(buffer);
-                        return true;
-                }
+			return false;
+		}
 
-                buffer_size = buffer_size + 1;
+		if(n < buffer_size) {
+			smart_string_append(ss, buffer);
+			free(buffer);
+			return true;
+		}
 
-                if((buffer2 = realloc(buffer, buffer_size)) == NULL) {
-                        free(buffer);
-                        return false;
-                } else {
-                        buffer = buffer2;
-                }
-        }
+		buffer_size = buffer_size + 1;
 
-        return false;
+		if((buffer2 = realloc(buffer, buffer_size)) == NULL) {
+			free(buffer);
+			return false;
+		} else {
+			buffer = buffer2;
+		}
+	}
 
+    return false;
 }
 
 void smart_string_destroy(SmartString* ss)
@@ -142,25 +138,47 @@ void smart_string_destroy(SmartString* ss)
 	if(ss->buffer != NULL) {
 		free(ss->buffer);
 	}
+	
 	free(ss);
 }
 
 bool smart_string_starts_with(SmartString* ss, const char* str)
 {
-		if((ss == NULL) || (str == NULL)) { return false; }
-		size_t part_length = strlen(str);
-		size_t i;
-		if(part_length == 0) {
+	if((ss == NULL) || (str == NULL)) { return false; }
+	size_t part_length = strlen(str);
+	size_t i;
+	if(part_length == 0) {
+		return false;
+	}
+	if(part_length > ss->length) {
+		return false;
+	}
+	for(i = 0; i < part_length; i++) {
+		if(ss->buffer[i] != str[i]) {
 			return false;
 		}
-		if(part_length > ss->length) {
-			return false;
-		}
-		for(i = 0; i < part_length; i++) {
-			if(ss->buffer[i] != str[i]) {
+	}
+
+	return true;
+}
+
+bool smart_string_ends_with(SmartString* ss, const char* str)
+{
+	if((ss == NULL) || (str == NULL)) { return false; }
+	int part_length = strlen(str);
+	int i;
+	if(part_length == 0) {
+		return false;
+	}
+	if((unsigned int)part_length > ss->length) {
+		return false;
+	}
+	size_t end = ss->length - 1;	
+	for(i = (part_length -1); i >= 0; i--) {
+			if(ss->buffer[end--] != str[i]) {
 				return false;
 			}
-		}
-
-		return true;
+	}
+	
+	return true;
 }
