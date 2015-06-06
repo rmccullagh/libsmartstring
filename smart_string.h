@@ -14,6 +14,9 @@
  *  You should have received a copy of the GNU General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+#ifndef __SMART_STRING_H__
+#define __SMART_STRING_H__
+
 #include <stddef.h>
 #include <stdbool.h>
 
@@ -31,3 +34,5 @@ bool FORMAT_ATTR(2, 3) smart_string_append_sprintf(SmartString* ss, const char* 
 void smart_string_destroy(SmartString* ss);
 bool smart_string_starts_with(SmartString* ss, const char* str);
 bool smart_string_ends_with(SmartString* ss, const char* str);
+
+#endif /* __SMART_STRING_H__ */
