@@ -24,6 +24,7 @@
 
 #define D_SMART_STRING_SIZE 16
 
+SMART_STRING_API 
 SmartString* smart_string_new(void)
 {
 	SmartString* ss;
@@ -40,7 +41,8 @@ SmartString* smart_string_new(void)
 	return ss;
 }
 
-bool smart_string_append(SmartString* ss, const char* str)
+SMART_STRING_API
+bool SMART_STRING_FUNC(append, const char* str)
 {
 	if(ss == NULL) { return false; }
 	if(str == NULL) { return false; }
@@ -76,7 +78,8 @@ bool smart_string_append(SmartString* ss, const char* str)
 	return true;
 }
 
-bool FORMAT_ATTR(2, 3) smart_string_append_sprintf(SmartString* ss, const char* format, ...)
+SMART_STRING_API
+bool FORMAT_ATTR(2, 3) SMART_STRING_FUNC(append_sprintf, const char* format, ...)
 {
 	if((ss == NULL) || (format == NULL)) { return false; }
 	if(strlen(format) == 0) {
@@ -120,6 +123,7 @@ bool FORMAT_ATTR(2, 3) smart_string_append_sprintf(SmartString* ss, const char* 
     return false;
 }
 
+SMART_STRING_API
 void smart_string_destroy(SmartString* ss)
 {
 	if(ss == NULL) {
@@ -142,7 +146,8 @@ void smart_string_destroy(SmartString* ss)
 	free(ss);
 }
 
-bool smart_string_starts_with(SmartString* ss, const char* str)
+SMART_STRING_API
+bool SMART_STRING_FUNC(starts_with, const char* str)
 {
 	if((ss == NULL) || (str == NULL)) { return false; }
 	size_t part_length = strlen(str);
@@ -162,7 +167,8 @@ bool smart_string_starts_with(SmartString* ss, const char* str)
 	return true;
 }
 
-bool smart_string_ends_with(SmartString* ss, const char* str)
+SMART_STRING_API
+bool SMART_STRING_FUNC(ends_with, const char* str)
 {
 	if((ss == NULL) || (str == NULL)) { return false; }
 	int part_length = strlen(str);

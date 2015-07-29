@@ -20,6 +20,9 @@
 #include <stddef.h>
 #include <stdbool.h>
 
+#define SMART_STRING_FUNC(name, ...) \
+	smart_string_##name(SmartString* ss, __VA_ARGS__)
+
 #define FORMAT_ATTR(x, y) __attribute__ ((format (printf, x, y)))
 
 typedef struct SmartString {
@@ -28,11 +31,42 @@ typedef struct SmartString {
 	char* buffer;
 } SmartString;
 
-SmartString* smart_string_new(void);
-bool smart_string_append(SmartString* ss, const char* str);
-bool FORMAT_ATTR(2, 3) smart_string_append_sprintf(SmartString* ss, const char* format, ...);
-void smart_string_destroy(SmartString* ss);
-bool smart_string_starts_with(SmartString* ss, const char* str);
-bool smart_string_ends_with(SmartString* ss, const char* str);
+extern SmartString* smart_string_new(void);
+extern bool smart_string_append(SmartString* ss, const char* str);
+extern bool FORMAT_ATTR(2, 3) smart_string_append_sprintf(SmartString* ss, const char* format, ...);
+extern void smart_string_destroy(SmartString* ss);
+extern bool smart_string_starts_with(SmartString* ss, const char* str);
+extern bool smart_string_ends_with(SmartString* ss, const char* str);
+
+#if defined _WIN32 || defined __CYGWIN__
+  #ifdef BUILDING_DLL
+    #ifdef __GNUC__
+      #define SMART_STRING_PUBLIC __attribute__ ((dllexport))
+    #else
+      #define SMART_STRING_PUBLIC __declspec(dllexport) // Note: actually gcc seems to also supports this syntax.
+    #endif
+  #else
+    #ifdef __GNUC__
+	#if __GNUC__ >= 4
+		#define SMART_STRING_PUBLIC __attribute ((visibility("default")))
+	#else
+      		#define SMART_STRING_PUBLIC __attribute__ ((dllimport))
+	#endif
+    #else
+      #define SMART_STRING_PUBLIC __declspec(dllimport) // Note: actually gcc seems to also supports this syntax.
+    #endif
+  #endif
+  #define SMART_STRING_LOCAL
+#else
+  #if __GNUC__ >= 4
+    #define SMART_STRING_PUBLIC __attribute__ ((visibility ("default")))
+    #define SMART_STRING_LOCAL  __attribute__ ((visibility ("hidden")))
+  #else
+    #define SMART_STRING_PUBLIC
+    #define SMART_STRING_LOCAL
+  #endif
+#endif
+
+#define SMART_STRING_API SMART_STRING_PUBLIC
 
 #endif /* __SMART_STRING_H__ */
