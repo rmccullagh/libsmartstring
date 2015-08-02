@@ -39,7 +39,7 @@ typedef struct SmartString {
 #if defined _WIN32
 	#define SMART_STRING_PUBLIC __declspec(dllexport)
 #else
-	#define SMART_STRING_PUBLIC __attribute ((visibility("default")))
+	#define SMART_STRING_PUBLIC __attribute__ ((visibility("default")))
 #endif
 
 #define SMART_STRING_API SMART_STRING_PUBLIC
